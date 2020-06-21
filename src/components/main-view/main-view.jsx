@@ -1,37 +1,45 @@
 import React from 'react';
 import axios from 'axios';
 
+import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
 export class MainView extends React.Component {
-
 	constructor() {
-    super();
+		super();
 
-    this.state = {
-      movies: null,
-      selectedMovie: null
-    };
-  }
-
-  // One of the "hooks" available in a React Component
-  componentDidMount() {
-    axios.get('https://myflixdb5253.herokuapp.com/movies')
-      .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+		this.state = {
+			movies: null,
+			selectedMovie: null,
+			user: null
+		};
 	}
-	
+
+	// One of the "hooks" available in a React Component
+	componentDidMount() {
+		axios
+			.get('https://myflixdb5253.herokuapp.com/movies')
+			.then((response) => {
+				// Assign the result to the state
+				this.setState({
+					movies: response.data
+				});
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+	}
+
 	onMovieClick(movie) {
 		this.setState({
 			selectedMovie: movie
+		});
+	}
+
+	onLoggedIn(user) {
+		this.setState({
+			user
 		});
 	}
 
@@ -41,23 +49,27 @@ export class MainView extends React.Component {
 		});
 	}
 
-  render() {
-    // If the state isn't initialized, this will throw on runtime
-    // before the data is initially loaded
-    const { movies, selectedMovie } = this.state;
+	render() {
+		// If the state isn't initialized, this will throw on runtime
+		// before the data is initially loaded
+		const { movies, selectedMovie, user } = this.state;
 
-    // Before the movies have been loaded
-    if (!movies) return <div className="main-view"/>;
+		if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
 
-    return (
-      <div className="main-view">
-				{selectedMovie
-					? <MovieView movie={selectedMovie} onClick={movie => this.onBackClick(movie)}/>
-					: movies.map(movie => (
-						<MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-          ))
-				}
-      </div>
-    );
+		// Before the movies have been loaded
+		if (!movies) return <div className="main-view" />;
+
+		return (
+			<div className="main-view">
+				{selectedMovie ? (
+					<MovieView movie={selectedMovie} onClick={(movie) => this.onBackClick(movie)} />
+				) : (
+					movies.map((movie) => (
+						<MovieCard key={movie._id} movie={movie} onClick={(movie) => this.onMovieClick(movie)} />
+					))
+				)}
+			</div>
+		);
 	}
 }
+
