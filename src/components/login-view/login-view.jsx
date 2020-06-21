@@ -27,11 +27,3 @@ export function LoginView(props) {
 		</form>
 	);
 }
-
-LoginView.PropTypes = {
-  props: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired
-  }).isRequired,
-  onClick: PropTypes.func.isRequired
-};
