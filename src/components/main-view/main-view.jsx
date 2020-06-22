@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Container from 'react-bootstrap/Container';
 import './main-view.scss';
-import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, Row, Container, Col } from 'react-bootstrap';
 
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -81,18 +80,21 @@ export class MainView extends React.Component {
 
 		return (
 			<Container>
-				<div>
+				<div className="navbar">
 					<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-						<Navbar.Brand href="#home">MyFlix</Navbar.Brand>
-						<Nav className="mr-auto">
-							<Nav.Link href="#home">Home</Nav.Link>
-							<Nav.Link href="#features">Features</Nav.Link>
-							<Nav.Link href="#pricing">Pricing</Nav.Link>
-						</Nav>
-						<Form inline>
-							<FormControl type="text" placeholder="Search" className="mr-sm-2" />
-							<Button variant="outline-info">Search</Button>
-						</Form>
+						<Navbar.Brand href="#home">MyFLix</Navbar.Brand>
+						<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+						<Navbar.Collapse id="responsive-navbar-nav">
+							<Nav className="mr-auto">
+								<Nav.Link href="/movies">Movies</Nav.Link>
+								<NavDropdown title="Account" id="collapsible-nav-dropdown">
+									<NavDropdown.Item href="/Account">View Account Info</NavDropdown.Item>
+									<NavDropdown.Item href="#action/3.2">View Favorites</NavDropdown.Item>
+									<NavDropdown.Divider />
+									<NavDropdown.Item href="#action/3.3">Logout</NavDropdown.Item>
+								</NavDropdown>
+							</Nav>
+						</Navbar.Collapse>
 					</Navbar>
 				</div>
 
@@ -101,7 +103,17 @@ export class MainView extends React.Component {
 						<MovieView movie={selectedMovie} onClick={(movie) => this.onBackClick(movie)} />
 					) : (
 						movies.map((movie) => (
-							<MovieCard key={movie._id} movie={movie} onClick={(movie) => this.onMovieClick(movie)} />
+							<Container>
+								<Row>
+									<Col>
+										<MovieCard
+											key={movie._id}
+											movie={movie}
+											onClick={(movie) => this.onMovieClick(movie)}
+										/>
+									</Col>
+								</Row>
+							</Container>
 						))
 					)}
 				</div>

@@ -1,5 +1,4 @@
 body {
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: #bbbbbb;
@@ -11,6 +10,19 @@ form {
 }
 
 .login-button {
+  margin: 10px;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.movie-cards,
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bbbbbb;
   margin: 10px;
 }
 .movie-title {
