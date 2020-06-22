@@ -10,23 +10,23 @@ export class MovieCard extends React.Component {
 		const { movie, onClick } = this.props;
 
 		return (
-			<Container className="movie-cards">
-				<Card text={'white'} style={{ width: '16rem' }} bg={'dark'}>
-					<Card.Img variant="top" src={movie.ImagePath} />
+			<div className="movie-cards col-10 col-lg-3 ml-5 mt-5">
+				<Card text={'white'} style={{ width: '15rem' }} bg={'dark'}>
+					<Card.Img className="movie-card-img" variant="top" src={movie.ImagePath} />
 					<Card.Body>
-						<Card.Title>{movie.Title}</Card.Title>
+						<Card.Title className="movie-title">{movie.Title}</Card.Title>
 						<Card.Text>{movie.Description}</Card.Text>
 						<Button onClick={() => onClick(movie)} variant="link">
-							Open
+							More Details
 						</Button>
 					</Card.Body>
 				</Card>
-			</Container>
+			</div>
 		);
 	}
 }
 
-MovieCard.PropTypes = {
+MovieCard.propTypes = {
 	movie: PropTypes.shape({
 		Title: PropTypes.string.isRequired,
 		Description: PropTypes.string.isRequired,

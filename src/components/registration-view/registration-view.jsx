@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 
 export function RegistrationView(props) {
 	const [ newUsername, setNewUsername ] = useState('');
@@ -68,3 +69,8 @@ export function RegistrationView(props) {
 		</Form>
 	);
 }
+
+RegistrationView.propTypes = {
+	setNewUsername: PropTypes.string,
+	setNewPassword: PropTypes.string
+};
