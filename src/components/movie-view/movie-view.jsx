@@ -38,7 +38,10 @@ export class MovieView extends React.Component {
 					<span className="label">Leading Cast: </span>
 					<span className="value">{movie.Actors.join(',  ')}</span>
 				</div>
-				<Button onClick={() => onClick(movie)}>Back</Button>
+				<br />
+				<Button variant="dark" onClick={() => onClick(movie)}>
+					Back
+				</Button>
 			</div>
 		);
 	}
@@ -49,8 +52,9 @@ MovieView.propTypes = {
 		Title: PropTypes.string.isRequired,
 		Description: PropTypes.string.isRequired,
 		ImagePath: PropTypes.string.isRequired,
-		Director: PropTypes.string,
-		Genre: PropTypes.string
+		Director: PropTypes.object,
+		Genre: PropTypes.object,
+		Actors: PropTypes.array
 	}).isRequired,
 	onClick: PropTypes.func.isRequired
 };
