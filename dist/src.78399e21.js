@@ -32620,6 +32620,14 @@ function LoginView(props) {
     props.onLoggedIn(username);
   };
 
+  var createAccount = function createAccount(e) {
+    e.preventDefault();
+    console.log('new user'); // Send a request to the server for authentication then call props.onLoggedIn(username)
+
+    props.onLoggedIn();
+    props.createUser();
+  };
+
   return _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Label, null, _react.default.createElement("h3", null, "Login to MyFlix")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Username:"), _react.default.createElement(_Form.default.Control, {
@@ -32645,12 +32653,8 @@ function LoginView(props) {
   }, "Login"), _react.default.createElement(_Button.default, {
     className: "login-button",
     type: "button",
-    onClick: handleSubmit
-  }, "Create Account"), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
-    className: "login-button",
-    type: "button",
-    onClick: handleSubmit
-  }, "Forgot Password"));
+    onClick: createAccount
+  }, "Create Account"), _react.default.createElement("br", null));
 }
 },{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
@@ -33190,7 +33194,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       movies: null,
       selectedMovie: null,
-      user: null
+      user: null,
+      newUser: false
     };
     return _this;
   } // One of the "hooks" available in a React Component
@@ -33225,6 +33230,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "createUser",
+    value: function createUser() {
+      this.setState({
+        newUser: true
+      });
+    }
+  }, {
     key: "onBackClick",
     value: function onBackClick() {
       this.setState({
@@ -33241,8 +33253,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           movies = _this$state.movies,
           selectedMovie = _this$state.selectedMovie,
-          user = _this$state.user;
-      if (!user) return _react.default.createElement(_Container.default, null, _react.default.createElement(_loginView.LoginView, {
+          user = _this$state.user,
+          newUser = _this$state.newUser;
+      if (!user) return !newUser ? _react.default.createElement(_Container.default, null, _react.default.createElement(_loginView.LoginView, {
+        createUser: function createUser() {
+          return _this3.createUser();
+        },
+        onLoggedIn: function onLoggedIn(user) {
+          return _this3.onLoggedIn(user);
+        }
+      })) : _react.default.createElement(_Container.default, null, _react.default.createElement(_registrationView.RegistrationView, {
         onLoggedIn: function onLoggedIn(user) {
           return _this3.onLoggedIn(user);
         }

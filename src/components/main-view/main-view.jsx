@@ -15,7 +15,8 @@ export class MainView extends React.Component {
 		this.state = {
 			movies: null,
 			selectedMovie: null,
-			user: null
+			user: null,
+			newUser: false
 		};
 	}
 
@@ -46,6 +47,12 @@ export class MainView extends React.Component {
 		});
 	}
 
+	createUser() {
+		this.setState({
+			newUser: true
+		});
+	}
+
 	onBackClick() {
 		this.setState({
 			selectedMovie: null
@@ -55,12 +62,16 @@ export class MainView extends React.Component {
 	render() {
 		// If the state isn't initialized, this will throw on runtime
 		// before the data is initially loaded
-		const { movies, selectedMovie, user } = this.state;
+		const { movies, selectedMovie, user, newUser } = this.state;
 
 		if (!user)
-			return (
+			return !newUser ? (
 				<Container>
-					<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+					<LoginView createUser={() => this.createUser()} onLoggedIn={(user) => this.onLoggedIn(user)} />
+				</Container>
+			) : (
+				<Container>
+					<RegistrationView onLoggedIn={(user) => this.onLoggedIn(user)} />
 				</Container>
 			);
 

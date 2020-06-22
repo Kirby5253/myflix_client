@@ -14,6 +14,14 @@ export function LoginView(props) {
 		props.onLoggedIn(username);
 	};
 
+	const createAccount = (e) => {
+		e.preventDefault();
+		console.log('new user');
+		// Send a request to the server for authentication then call props.onLoggedIn(username)
+		props.onLoggedIn();
+		props.createUser();
+	};
+
 	return (
 		<Form>
 			<Form.Label>
@@ -43,13 +51,10 @@ export function LoginView(props) {
 				Login
 			</Button>
 			{/* This currently has the same functionality as the submit button */}
-			<Button className="login-button" type="button" onClick={handleSubmit}>
+			<Button className="login-button" type="button" onClick={createAccount}>
 				Create Account
 			</Button>
 			<br />
-			<Button className="login-button" type="button" onClick={handleSubmit}>
-				Forgot Password
-			</Button>
 		</Form>
 	);
 }
