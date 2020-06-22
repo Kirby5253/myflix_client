@@ -1,9 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import Container from 'react-bootstrap/Container';
+import './main-view.scss';
 
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { RegistrationView } from '../registration-view/registration-view';
 
 export class MainView extends React.Component {
 	constructor() {
@@ -54,21 +57,28 @@ export class MainView extends React.Component {
 		// before the data is initially loaded
 		const { movies, selectedMovie, user } = this.state;
 
-		if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+		if (!user)
+			return (
+				<Container>
+					<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+				</Container>
+			);
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
 
 		return (
-			<div className="main-view">
-				{selectedMovie ? (
-					<MovieView movie={selectedMovie} onClick={(movie) => this.onBackClick(movie)} />
-				) : (
-					movies.map((movie) => (
-						<MovieCard key={movie._id} movie={movie} onClick={(movie) => this.onMovieClick(movie)} />
-					))
-				)}
-			</div>
+			<Container>
+				<div className="main-view">
+					{selectedMovie ? (
+						<MovieView movie={selectedMovie} onClick={(movie) => this.onBackClick(movie)} />
+					) : (
+						movies.map((movie) => (
+							<MovieCard key={movie._id} movie={movie} onClick={(movie) => this.onMovieClick(movie)} />
+						))
+					)}
+				</div>
+			</Container>
 		);
 	}
 }
