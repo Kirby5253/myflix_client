@@ -32647,10 +32647,12 @@ function LoginView(props) {
       return setPassword(e.target.value);
     }
   })), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
+    variant: "dark",
     className: "login-button",
     type: "button",
     onClick: handleSubmit
   }, "Login"), _react.default.createElement(_Button.default, {
+    variant: "dark",
     className: "login-button",
     type: "button",
     onClick: createAccount
@@ -33128,6 +33130,7 @@ function RegistrationView(props) {
       return setNewBirthDate(e.target.value);
     }
   })), _react.default.createElement(_Button.default, {
+    variant: "dark",
     type: "button",
     onClick: handleSubmit
   }, "Submit"));

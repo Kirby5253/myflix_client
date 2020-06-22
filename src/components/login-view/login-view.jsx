@@ -47,11 +47,11 @@ export function LoginView(props) {
 				/>
 			</Form.Group>
 			<br />
-			<Button className="login-button" type="button" onClick={handleSubmit}>
+			<Button variant="dark" className="login-button" type="button" onClick={handleSubmit}>
 				Login
 			</Button>
 			{/* This currently has the same functionality as the submit button */}
-			<Button className="login-button" type="button" onClick={createAccount}>
+			<Button variant="dark" className="login-button" type="button" onClick={createAccount}>
 				Create Account
 			</Button>
 			<br />
