@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import './main-view.scss';
+import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
 
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -80,6 +81,21 @@ export class MainView extends React.Component {
 
 		return (
 			<Container>
+				<div>
+					<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+						<Navbar.Brand href="#home">MyFlix</Navbar.Brand>
+						<Nav className="mr-auto">
+							<Nav.Link href="#home">Home</Nav.Link>
+							<Nav.Link href="#features">Features</Nav.Link>
+							<Nav.Link href="#pricing">Pricing</Nav.Link>
+						</Nav>
+						<Form inline>
+							<FormControl type="text" placeholder="Search" className="mr-sm-2" />
+							<Button variant="outline-info">Search</Button>
+						</Form>
+					</Navbar>
+				</div>
+
 				<div className="main-view">
 					{selectedMovie ? (
 						<MovieView movie={selectedMovie} onClick={(movie) => this.onBackClick(movie)} />

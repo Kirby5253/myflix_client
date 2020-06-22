@@ -18,6 +18,7 @@ form {
 }
 .movie-view {
   margin: 20px;
+  align-content: center;
 }
 
 .movie-poster {
@@ -28,6 +29,10 @@ form {
 
 .label {
   font-weight: bold;
+}
+
+div {
+  align-content: center;
 }
 body {
   font-family: "Ubuntu", sans-serif;
