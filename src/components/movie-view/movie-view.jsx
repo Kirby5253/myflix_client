@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import './movie-view.scss';
 
 export class MovieView extends React.Component {
 	constructor() {
@@ -31,7 +33,7 @@ export class MovieView extends React.Component {
 					<span className="label">Director: </span>
 					<span className="value">{movie.Director.Name}</span>
 				</div>
-				<button onClick={() => onClick(movie)}>Back</button>
+				<Button onClick={() => onClick(movie)}>Back</Button>
 			</div>
 		);
 	}
