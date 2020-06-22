@@ -32610,27 +32610,10 @@ function LoginView(props) {
   var _useState3 = (0, _react.useState)(''),
       _useState4 = _slicedToArray(_useState3, 2),
       password = _useState4[0],
-      setPassword = _useState4[1];
-
-  var _useState5 = (0, _react.useState)(''),
-      _useState6 = _slicedToArray(_useState5, 2),
-      newUsername = _useState6[0],
-      setNewUsername = _useState6[1];
-
-  var _useState7 = (0, _react.useState)(''),
-      _useState8 = _slicedToArray(_useState7, 2),
-      newPassword = _useState8[0],
-      setNewPassword = _useState8[1]; // Has ability to login with random credentials for existing user, no functionality for new users yet
+      setPassword = _useState4[1]; // Has ability to login with random credentials for existing user, no functionality for new users yet
 
 
   var handleSubmit = function handleSubmit(e) {
-    e.preventDefault();
-    console.log(username, password); // Send a request to the server for authentication then call props.onLoggedIn(username)
-
-    props.onLoggedIn(username);
-  };
-
-  var handleNewUser = function handleNewUser(e) {
     e.preventDefault();
     console.log(username, password); // Send a request to the server for authentication then call props.onLoggedIn(username)
 
