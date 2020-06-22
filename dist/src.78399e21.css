@@ -1,3 +1,31 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bbbbbb;
+  margin: 10px;
+}
+
+form {
+  margin-top: 20%;
+}
+
+.login-button {
+  margin: 10px;
+}
+.movie-view {
+  margin: 20px;
+}
+
+.movie-poster {
+  float: left;
+  width: 50%;
+  margin-right: 15px;
+}
+
+.label {
+  font-weight: bold;
+}
 .my-flix {
   color: steelblue;
 }
