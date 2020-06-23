@@ -3,6 +3,8 @@ import axios from 'axios';
 import './main-view.scss';
 import { Nav, Navbar, NavDropdown, Row, Container, Col } from 'react-bootstrap';
 
+import { BrowserRouter as Router, Route} from "react-router-dom";
+
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -13,7 +15,7 @@ export class MainView extends React.Component {
 		super();
 
 		this.state = {
-			movies: null,
+			movies: [],
 			selectedMovie: null,
 			user: null,
 			newUser: false
@@ -59,12 +61,6 @@ export class MainView extends React.Component {
 			});
 	}
 
-	onMovieClick(movie) {
-		this.setState({
-			selectedMovie: movie
-		});
-	}
-
 	createAccount(user) {
 		this.setState({
 			user
@@ -74,12 +70,6 @@ export class MainView extends React.Component {
 	createUser() {
 		this.setState({
 			newUser: true
-		});
-	}
-
-	onBackClick() {
-		this.setState({
-			selectedMovie: null
 		});
 	}
 
@@ -93,33 +83,20 @@ export class MainView extends React.Component {
 		// before the data is initially loaded
 		const { movies, selectedMovie, user, newUser } = this.state;
 
-		if (!user)
-			return !newUser ? (
-				<Container>
-					<LoginView
-						createAccount={() => this.createAccount()}
-						createUser={() => this.createUser()}
-						onLoggedIn={(user) => this.onLoggedIn(user)}
-					/>
-				</Container>
-			) : (
-				<Container>
-					<RegistrationView onLoggedIn={(user) => this.onLoggedIn(user)} />
-				</Container>
-			);
-
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
 
 		return (
-			<div>
+			<Router>
 				<div className="navbar">
 					<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-						<Navbar.Brand href="#home">MyFLix</Navbar.Brand>
+						<Navbar.Brand href="/"><h1>MyFLix</h1></Navbar.Brand>
 						<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 						<Navbar.Collapse id="responsive-navbar-nav">
 							<Nav className="mr-auto">
-								<Nav.Link href="/movies">Movies</Nav.Link>
+								<Nav.Link href="/">Movies</Nav.Link>
+								<Nav.Link href="/directors">Directors</Nav.Link>
+								<Nav.Link href="/genres">Genres</Nav.Link>
 								<Nav.Link href="#action/3.2">Favorites</Nav.Link>
 								<Nav.Link href="/Account">Account Info</Nav.Link>
 								<Nav.Link onClick={(user) => this.logoutUser()} href="http://localhost:1234/">
@@ -131,21 +108,24 @@ export class MainView extends React.Component {
 				</div>
 
 				<div className="main-view">
-					{selectedMovie ? (
-						<MovieView movie={selectedMovie} onClick={(movie) => this.onBackClick(movie)} />
-					) : (
-						movies.map((movie) => (
-							<div className="grid">
-								<MovieCard
-									key={movie._id}
-									movie={movie}
-									onClick={(movie) => this.onMovieClick(movie)}
-								/>
-							</div>
-						))
-					)}
-				</div>
-			</div>
+
+          <Route exact path="/" render={() => {
+						if (!user) return (<Container><LoginView onLoggedIn={(user) => this.onLoggedIn(user)}/></Container>);
+						return movies.map(m => <div className="grid"><MovieCard key={m._id} movie={m}/></div>)}}/>
+
+					<Route path="/register" render={() => <Container><RegistrationView/></Container>}/>
+
+          <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+
+					<Route path="/genres/:name" render={({ match }) => {
+						if (!movies) return <div className="main-view"/>;
+						return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre}/>}} />
+
+					<Route path="/directors/:name" render={({ match }) => {
+						if (!movies) return <div className="main-view"/>;
+						return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}} />
+        </div>
+			</Router>
 		);
 	}
 }

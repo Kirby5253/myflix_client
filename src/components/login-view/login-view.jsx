@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 export function LoginView(props) {
 	const [ username, setUsername ] = useState('');
@@ -23,6 +24,7 @@ export function LoginView(props) {
 			})
 			.catch((e) => {
 				console.log('no such user');
+				alert('User input not recognized. Please try again, or create a new account.')
 			});
 	};
 
@@ -64,9 +66,11 @@ export function LoginView(props) {
 					Login
 				</Button>
 				{/* This currently has the same functionality as the submit button */}
-				<Button variant="dark" className="login-button" type="button" onClick={createAccount}>
-					Create Account
-				</Button>
+				<Link to={`/register`}>
+					<Button variant="dark" className="login-button" type="button">
+						Create Account
+					</Button>
+				</Link>
 				<br />
 			</Form>
 		</div>

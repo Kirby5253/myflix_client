@@ -13,6 +13,16 @@
 	font-weight: bold;
 }
 
+.link {
+	text-decoration: underline;
+}
+
+.link:hover {
+	color: white;
+	text-decoration: none;
+	background-color: #343a40;
+}
+
 div {
 	align-content: center;
 }

@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './movie-view.scss';
 
+import { Link } from "react-router-dom";
+
 export class MovieView extends React.Component {
 	constructor() {
 		super();
@@ -26,22 +28,29 @@ export class MovieView extends React.Component {
 					<span className="label">Description: </span>
 					<span className="value">{movie.Description}</span>
 				</div>
-				<div className="movie-genre">
-					<span className="label">Genre: </span>
-					<span className="value">{movie.Genre.Name}</span>
-				</div>
-				<div className="movie-director">
-					<span className="label">Director: </span>
-					<span className="value">{movie.Director.Name}</span>
-				</div>
 				<div className="movie-actors">
 					<span className="label">Leading Cast: </span>
 					<span className="value">{movie.Actors.join(',  ')}</span>
 				</div>
+				<div className="movie-genre">
+					<Link to={`/genres/${movie.Genre.Name}`}>
+						<Button variant="link" className="label link">Genre: </Button>
+					</Link>
+					<span className="value">{movie.Genre.Name}</span>
+				</div>
+				<div className="movie-director">
+					<Link to={`/genres/${movie.Genre.Name}`}>
+						<Button variant="link" className="label link">Director: </Button>
+					</Link>
+					<span className="value">{movie.Director.Name}</span>
+				</div>
+				
 				<br />
-				<Button variant="dark" onClick={() => onClick(movie)}>
-					Back
-				</Button>
+				<Link to={`/`}>
+					<Button variant="dark">
+						Back
+					</Button>
+				</Link>
 			</div>
 		);
 	}
