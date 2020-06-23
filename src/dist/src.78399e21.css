@@ -12,7 +12,7 @@ form {
 }
 
 .main-view {
-  margin-top: 40px;
+  margin-top: 69px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-template-rows: auto;
@@ -61,6 +61,16 @@ form {
 
 .label {
   font-weight: bold;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #343a40;
 }
 
 div {
