@@ -83,6 +83,11 @@ export class MainView extends React.Component {
 		});
 	}
 
+	logoutUser(user) {
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+	}
+
 	render() {
 		// If the state isn't initialized, this will throw on runtime
 		// before the data is initially loaded
@@ -115,12 +120,11 @@ export class MainView extends React.Component {
 						<Navbar.Collapse id="responsive-navbar-nav">
 							<Nav className="mr-auto">
 								<Nav.Link href="/movies">Movies</Nav.Link>
-								<NavDropdown title="Account" id="collapsible-nav-dropdown">
-									<NavDropdown.Item href="/Account">View Account Info</NavDropdown.Item>
-									<NavDropdown.Item href="#action/3.2">View Favorites</NavDropdown.Item>
-									<NavDropdown.Divider />
-									<NavDropdown.Item href="#action/3.3">Logout</NavDropdown.Item>
-								</NavDropdown>
+								<Nav.Link href="#action/3.2">Favorites</Nav.Link>
+								<Nav.Link href="/Account">Account Info</Nav.Link>
+								<Nav.Link onClick={(user) => this.logoutUser()} href="http://localhost:1234/">
+									Logout
+								</Nav.Link>
 							</Nav>
 						</Navbar.Collapse>
 					</Navbar>

@@ -46257,6 +46257,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "logoutUser",
+    value: function logoutUser(user) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -46305,16 +46311,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         className: "mr-auto"
       }, _react.default.createElement(_reactBootstrap.Nav.Link, {
         href: "/movies"
-      }, "Movies"), _react.default.createElement(_reactBootstrap.NavDropdown, {
-        title: "Account",
-        id: "collapsible-nav-dropdown"
-      }, _react.default.createElement(_reactBootstrap.NavDropdown.Item, {
-        href: "/Account"
-      }, "View Account Info"), _react.default.createElement(_reactBootstrap.NavDropdown.Item, {
+      }, "Movies"), _react.default.createElement(_reactBootstrap.Nav.Link, {
         href: "#action/3.2"
-      }, "View Favorites"), _react.default.createElement(_reactBootstrap.NavDropdown.Divider, null), _react.default.createElement(_reactBootstrap.NavDropdown.Item, {
-        href: "#action/3.3"
-      }, "Logout")))))), _react.default.createElement("div", {
+      }, "Favorites"), _react.default.createElement(_reactBootstrap.Nav.Link, {
+        href: "/Account"
+      }, "Account Info"), _react.default.createElement(_reactBootstrap.Nav.Link, {
+        onClick: function onClick(user) {
+          return _this3.logoutUser();
+        },
+        href: "http://localhost:1234/"
+      }, "Logout"))))), _react.default.createElement("div", {
         className: "main-view"
       }, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
         movie: selectedMovie,
