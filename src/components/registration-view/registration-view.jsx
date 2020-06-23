@@ -18,55 +18,57 @@ export function RegistrationView(props) {
 	};
 
 	return (
-		<Form>
-			<Form.Label>
-				<h3>Create New User for MyFlix</h3>
-			</Form.Label>
+		<div className="login-form">
+			<Form>
+				<Form.Label>
+					<h3>Create New User for MyFlix</h3>
+				</Form.Label>
 
-			<Form.Group controlId="formBasicUsername">
-				<Form.Label>Create Username:</Form.Label>
-				<Form.Control
-					type="text"
-					placeholder="Username"
-					value={newUsername}
-					onChange={(e) => setNewUsername(e.target.value)}
-				/>
-			</Form.Group>
+				<Form.Group controlId="formBasicUsername">
+					<Form.Label>Create Username:</Form.Label>
+					<Form.Control
+						type="text"
+						placeholder="Username"
+						value={newUsername}
+						onChange={(e) => setNewUsername(e.target.value)}
+					/>
+				</Form.Group>
 
-			<Form.Group controlId="formBasicPassword">
-				<Form.Label>Create Password</Form.Label>
-				<Form.Control
-					type="password"
-					placeholder="Password"
-					value={newPassword}
-					onChange={(e) => setNewPassword(e.target.value)}
-				/>
-			</Form.Group>
+				<Form.Group controlId="formBasicPassword">
+					<Form.Label>Create Password</Form.Label>
+					<Form.Control
+						type="password"
+						placeholder="Password"
+						value={newPassword}
+						onChange={(e) => setNewPassword(e.target.value)}
+					/>
+				</Form.Group>
 
-			<Form.Group controlId="formBasicPassword">
-				<Form.Label>Email</Form.Label>
-				<Form.Control
-					type="email"
-					placeholder="Email"
-					value={newEmail}
-					onChange={(e) => setNewEmail(e.target.value)}
-				/>
-			</Form.Group>
+				<Form.Group controlId="formBasicPassword">
+					<Form.Label>Email</Form.Label>
+					<Form.Control
+						type="email"
+						placeholder="Email"
+						value={newEmail}
+						onChange={(e) => setNewEmail(e.target.value)}
+					/>
+				</Form.Group>
 
-			<Form.Group controlId="formBasicPassword">
-				<Form.Label>Date of Birth</Form.Label>
-				<Form.Control
-					type="text"
-					placeholder="YYYY-MM-DD"
-					value={newBirthDate}
-					onChange={(e) => setNewBirthDate(e.target.value)}
-				/>
-			</Form.Group>
+				<Form.Group controlId="formBasicPassword">
+					<Form.Label>Date of Birth</Form.Label>
+					<Form.Control
+						type="text"
+						placeholder="YYYY-MM-DD"
+						value={newBirthDate}
+						onChange={(e) => setNewBirthDate(e.target.value)}
+					/>
+				</Form.Group>
 
-			<Button variant="dark" type="button" onClick={handleSubmit}>
-				Submit
-			</Button>
-		</Form>
+				<Button variant="dark" type="button" onClick={handleSubmit}>
+					Submit
+				</Button>
+			</Form>
+		</div>
 	);
 }
 

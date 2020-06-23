@@ -21,9 +21,33 @@ export class MainView extends React.Component {
 	}
 
 	// One of the "hooks" available in a React Component
+	// Takes the token and allows users to stay logged in
 	componentDidMount() {
+		let accessToken = localStorage.getItem('token');
+		if (accessToken !== null) {
+			this.setState({
+				user: localStorage.getItem('user')
+			});
+			this.getMovies(accessToken);
+		}
+	}
+
+	onLoggedIn(authData) {
+		console.log(authData);
+		this.setState({
+			user: authData.user.Username
+		});
+
+		localStorage.setItem('token', authData.token);
+		localStorage.setItem('user', authData.user.Username);
+		this.getMovies(authData.token);
+	}
+
+	getMovies(token) {
 		axios
-			.get('https://myflixdb5253.herokuapp.com/movies')
+			.get('https://myflixdb5253.herokuapp.com/movies', {
+				headers: { Authorization: `Bearer ${token}` }
+			})
 			.then((response) => {
 				// Assign the result to the state
 				this.setState({
@@ -41,7 +65,7 @@ export class MainView extends React.Component {
 		});
 	}
 
-	onLoggedIn(user) {
+	createAccount(user) {
 		this.setState({
 			user
 		});
@@ -67,7 +91,11 @@ export class MainView extends React.Component {
 		if (!user)
 			return !newUser ? (
 				<Container>
-					<LoginView createUser={() => this.createUser()} onLoggedIn={(user) => this.onLoggedIn(user)} />
+					<LoginView
+						createAccount={() => this.createAccount()}
+						createUser={() => this.createUser()}
+						onLoggedIn={(user) => this.onLoggedIn(user)}
+					/>
 				</Container>
 			) : (
 				<Container>

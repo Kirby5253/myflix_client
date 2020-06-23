@@ -30,7 +30,7 @@ export function LoginView(props) {
 		e.preventDefault();
 		console.log('new user');
 		// Send a request to the server for authentication then call props.onLoggedIn(username)
-		props.onLoggedIn();
+		props.createAccount();
 		props.createUser();
 	};
 
