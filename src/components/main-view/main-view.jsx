@@ -79,9 +79,9 @@ export class MainView extends React.Component {
 		if (!movies) return <div className="main-view" />;
 
 		return (
-			<Container>
+			<div>
 				<div className="navbar">
-					<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+					<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
 						<Navbar.Brand href="#home">MyFLix</Navbar.Brand>
 						<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 						<Navbar.Collapse id="responsive-navbar-nav">
@@ -103,21 +103,17 @@ export class MainView extends React.Component {
 						<MovieView movie={selectedMovie} onClick={(movie) => this.onBackClick(movie)} />
 					) : (
 						movies.map((movie) => (
-							<Container>
-								<Row>
-									<Col>
-										<MovieCard
-											key={movie._id}
-											movie={movie}
-											onClick={(movie) => this.onMovieClick(movie)}
-										/>
-									</Col>
-								</Row>
-							</Container>
+							<div className="grid">
+								<MovieCard
+									key={movie._id}
+									movie={movie}
+									onClick={(movie) => this.onMovieClick(movie)}
+								/>
+							</div>
 						))
 					)}
 				</div>
-			</Container>
+			</div>
 		);
 	}
 }
