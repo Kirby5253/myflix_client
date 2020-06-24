@@ -36,7 +36,9 @@ export class ProfileView extends React.Component {
 							<Button variant="dark">View Favorites</Button>
 						</li>
 						<li>
-							<Button variant="dark">Update Account</Button>
+							<Link to={`/profile/${user.Username}/update`}>
+								<Button variant="dark">Update Account</Button>
+							</Link>
 						</li>
 						<li>
 							<Link to={`/profile/${user.Username}/delete`}>
