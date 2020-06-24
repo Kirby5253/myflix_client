@@ -33,6 +33,10 @@ export function RegistrationView(props) {
 			});
 	};
 
+	const cancelRegistration = () => {
+		window.open('/', '_self');
+	};
+
 	return (
 		<div className="login-form">
 			<Form>
@@ -84,6 +88,9 @@ export function RegistrationView(props) {
 
 				<Button variant="dark" type="button" onClick={handleRegistrationSubmit}>
 					Register
+				</Button>
+				<Button variant="link" type="button" onClick={cancelRegistration}>
+					Already a user? Click here to sign in.
 				</Button>
 			</Form>
 		</div>
