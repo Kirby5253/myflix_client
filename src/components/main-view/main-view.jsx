@@ -129,7 +129,7 @@ export class MainView extends React.Component {
 		if (!movies) return <div className="main-view" />;
 
 		return (
-			<Router>
+			<div>
 				<div className="navbar">
 					<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
 						<Navbar.Brand href="/">
@@ -148,101 +148,109 @@ export class MainView extends React.Component {
 					</Navbar>
 				</div>
 
-				<div className="main-view">
-					<Route
-						exact
-						path="/"
-						render={() => {
-							if (!user)
+				<Router>
+					<div className="main-view">
+						<Route
+							exact
+							path="/"
+							render={() => {
+								if (!user)
+									return (
+										<Container>
+											<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+										</Container>
+									);
+								return movies.map((m) => (
+									<div className="grid">
+										<MovieCard key={m._id} movie={m} />
+									</div>
+								));
+							}}
+						/>
+
+						<Route
+							path="/register"
+							render={() => {
+								if (!user)
+									return (
+										<Container>
+											<RegistrationView />
+										</Container>
+									);
+							}}
+						/>
+
+						<Route
+							path="/profile/:username"
+							render={({ match }) => {
+								// Users can only see their own account info!
+								if (match.params.username === storedUser)
+									return (
+										<ProfileView user={users.find((m) => m.Username === match.params.username)} />
+									);
+							}}
+						/>
+
+						<Route
+							path="/profile/:username/update"
+							render={({ match }) => {
+								// Users can only see their own account info!
+								if (match.params.username === storedUser)
+									return (
+										<ChangeProfile user={users.find((m) => m.Username === match.params.username)} />
+									);
+							}}
+						/>
+
+						<Route
+							path="/profile/:username/delete"
+							render={({ match }) => {
+								// Users can only see their own account info!
+								if (match.params.username === storedUser)
+									return (
+										<DeleteProfile
+											user={users.find((m) => m.Username === match.params.username)}
+											onDelete={(user) => this.logoutUser()}
+										/>
+									);
+							}}
+						/>
+
+						<Route
+							path="/movies/:movieId"
+							render={({ match }) => (
+								<MovieView
+									addToFav={() => this.addToFav(user)}
+									movie={movies.find((m) => m._id === match.params.movieId)}
+									user={users.find((m) => m.Username === storedUser)}
+								/>
+							)}
+						/>
+
+						<Route
+							path="/genres/:name"
+							render={({ match }) => {
+								if (!movies) return <div className="main-view" />;
 								return (
-									<Container>
-										<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-									</Container>
+									<GenreView genre={movies.find((m) => m.Genre.Name === match.params.name).Genre} />
 								);
-							return movies.map((m) => (
-								<div className="grid">
-									<MovieCard key={m._id} movie={m} />
-								</div>
-							));
-						}}
-					/>
+							}}
+						/>
 
-					<Route
-						path="/register"
-						render={() => {
-							if (!user)
+						<Route
+							path="/directors/:name"
+							render={({ match }) => {
+								if (!movies) return <div className="main-view" />;
 								return (
-									<Container>
-										<RegistrationView />
-									</Container>
-								);
-						}}
-					/>
-
-					<Route
-						path="/profile/:username"
-						render={({ match }) => {
-							// Users can only see their own account info!
-							if (match.params.username === storedUser)
-								return <ProfileView user={users.find((m) => m.Username === match.params.username)} />;
-						}}
-					/>
-
-					<Route
-						path="/profile/:username/update"
-						render={({ match }) => {
-							// Users can only see their own account info!
-							if (match.params.username === storedUser)
-								return <ChangeProfile user={users.find((m) => m.Username === match.params.username)} />;
-						}}
-					/>
-
-					<Route
-						path="/profile/:username/delete"
-						render={({ match }) => {
-							// Users can only see their own account info!
-							if (match.params.username === storedUser)
-								return (
-									<DeleteProfile
-										user={users.find((m) => m.Username === match.params.username)}
-										onDelete={(user) => this.logoutUser()}
+									<DirectorView
+										director={movies.find((m) => m.Director.Name === match.params.name).Director}
 									/>
 								);
-						}}
-					/>
-
-					<Route
-						path="/movies/:movieId"
-						render={({ match }) => (
-							<MovieView
-								addToFav={() => this.addToFav(user)}
-								movie={movies.find((m) => m._id === match.params.movieId)}
-								user={users.find((m) => m.Username === storedUser)}
-							/>
-						)}
-					/>
-
-					<Route
-						path="/genres/:name"
-						render={({ match }) => {
-							if (!movies) return <div className="main-view" />;
-							return <GenreView genre={movies.find((m) => m.Genre.Name === match.params.name).Genre} />;
-						}}
-					/>
-
-					<Route
-						path="/directors/:name"
-						render={({ match }) => {
-							if (!movies) return <div className="main-view" />;
-							return (
-								<DirectorView
-									director={movies.find((m) => m.Director.Name === match.params.name).Director}
-								/>
-							);
-						}}
-					/>
-				</div>
-			</Router>
+							}}
+						/>
+					</div>
+				</Router>
+			</div>
 		);
 	}
 }
