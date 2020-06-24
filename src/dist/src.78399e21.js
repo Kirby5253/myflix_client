@@ -49002,6 +49002,10 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
           headers: {
             Authorization: "Bearer ".concat(token)
           }
+        }, {
+          headers: {
+            Authorization: "Bearer ".concat(token)
+          }
         }).then(function (response) {
           var data = response.data;
           console.log(data);
@@ -49492,18 +49496,18 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       }, "Email: "), _react.default.createElement("span", {
         className: "value"
       }, user.Email)), _react.default.createElement("div", {
-        className: "user-email"
+        className: "user-favorites"
       }, _react.default.createElement("span", {
         className: "profile-label"
       }, "Favorites: "), _react.default.createElement("span", {
         className: "value"
-      }, user.Favorite_Movies)), _react.default.createElement("div", {
+      }, user.Favorite_Movies.join(',  '))), _react.default.createElement("div", {
         className: "button-nav"
       }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile/".concat(user.Username, "/favorites")
       }, _react.default.createElement(_Button.default, {
         variant: "dark"
-      }, "Edit Favorites"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+      }, "Remove Favorites"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile/".concat(user.Username, "/update")
       }, _react.default.createElement(_Button.default, {
         variant: "dark"
@@ -49781,9 +49785,11 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ChangeFavorites = void 0;
+exports.ChangeFavorites = ChangeFavorites;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
+
+var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -49797,85 +49803,74 @@ var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function ChangeFavorites() {
+  var _useState = (0, _react.useState)(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      favoriteId = _useState2[0],
+      confirmFavoriteId = _useState2[1];
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+  var storedUser = localStorage.getItem('user');
+  var token = localStorage.getItem('token');
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+  var handleRemoveFavorite = function handleRemoveFavorite(e) {
+    _axios.default.put("https://myflixdb5253.herokuapp.com/users/".concat(storedUser, "/Movies/").concat(favoriteId), {
+      headers: {
+        Authorization: "Bearer ".concat(token)
+      }
+    }, {
+      headers: {
+        Authorization: "Bearer ".concat(token)
+      }
+    }).then(function (response) {
+      var data = response.data;
+      console.log(data);
+      location.reload();
+    }).catch(function (e) {
+      console.log(e);
+    });
+  };
 
-var ChangeFavorites = /*#__PURE__*/function (_React$Component) {
-  _inherits(ChangeFavorites, _React$Component);
-
-  var _super = _createSuper(ChangeFavorites);
-
-  function ChangeFavorites() {
-    _classCallCheck(this, ChangeFavorites);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(ChangeFavorites, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          user = _this$props.user,
-          movie = _this$props.movie,
-          onDelete = _this$props.onDelete;
-      var token = localStorage.getItem('token');
-
-      var handleAddFavorite = function handleAddFavorite(e) {
-        _axios.default.post("https://myflixdb5253.herokuapp.com/users/".concat(user.Username, "/Movies/").concat(movie._id), {
-          headers: {
-            Authorization: "Bearer ".concat(token)
-          }
-        }).then(function (response) {
-          var data = response.data;
-          console.log(data);
-        }).catch(function (e) {
-          console.log(e);
-        });
-      };
-
-      var handleRemoveFavorite = function handleRemoveFavorite(e) {
-        _axios.default.put("https://myflixdb5253.herokuapp.com/users/".concat(user.Username, "/Movies/").concat(movie._id), {
-          headers: {
-            Authorization: "Bearer ".concat(token)
-          }
-        }).then(function (response) {
-          var data = response.data;
-          console.log(data);
-        }).catch(function (e) {
-          console.log(e);
-        });
-      };
-
-      return _react.default.createElement("div", {
-        className: "remove-favorite"
-      }, _react.default.createElement("h1", null, "Select the movies to remove from favorites"));
-    }
-  }]);
-
-  return ChangeFavorites;
-}(_react.default.Component);
-
-exports.ChangeFavorites = ChangeFavorites;
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./change-favorites.scss":"components/change-favorites-view/change-favorites.scss","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+  return _react.default.createElement("div", {
+    className: "remove-favorite"
+  }, _react.default.createElement("h1", null), _react.default.createElement(_Form.default, {
+    className: "delete-fav"
+  }, _react.default.createElement(_Form.default.Group, {
+    controlId: "formRemoveFav"
+  }, _react.default.createElement(_Form.default.Label, null, "Input the ID of the movies you wish to remove from favorites"), _react.default.createElement(_Form.default.Control, {
+    type: "text",
+    placeholder: "Movie ID",
+    value: favoriteId,
+    onChange: function onChange(e) {
+      return confirmFavoriteId(e.target.value);
+    },
+    required: true
+  })), _react.default.createElement(_Button.default, {
+    onClick: handleRemoveFavorite,
+    variant: "primary",
+    type: "button"
+  }, "Update Favorites"), _react.default.createElement(_reactRouterDom.Link, {
+    to: "/profile/".concat(storedUser)
+  }, _react.default.createElement(_Button.default, {
+    variant: "link"
+  }, "Cancel Update"))));
+}
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./change-favorites.scss":"components/change-favorites-view/change-favorites.scss","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -50318,7 +50313,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62270" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64538" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

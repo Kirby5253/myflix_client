@@ -26,15 +26,15 @@ export class ProfileView extends React.Component {
 					<span className="profile-label">Email: </span>
 					<span className="value">{user.Email}</span>
 				</div>
-				<div className="user-email">
+				<div className="user-favorites">
 					<span className="profile-label">Favorites: </span>
-					<span className="value">{user.Favorite_Movies}</span>
+					<span className="value">{user.Favorite_Movies.join(',  ')}</span>
 				</div>
 				<div className="button-nav">
 					<ul>
 						<li>
 							<Link to={`/profile/${user.Username}/favorites`}>
-								<Button variant="dark">Edit Favorites</Button>
+								<Button variant="dark">Remove Favorites</Button>
 							</Link>
 						</li>
 						<li>

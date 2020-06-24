@@ -19,9 +19,15 @@ export class MovieView extends React.Component {
 
 		const handleAddFavorite = (e) => {
 			axios
-				.post(`https://myflixdb5253.herokuapp.com/users/${storedUser}/Movies/${movie._id}`, {
-					headers: { Authorization: `Bearer ${token}` }
-				})
+				.post(
+					`https://myflixdb5253.herokuapp.com/users/${storedUser}/Movies/${movie._id}`,
+					{
+						headers: { Authorization: `Bearer ${token}` }
+					},
+					{
+						headers: { Authorization: `Bearer ${token}` }
+					}
+				)
 				.then((response) => {
 					const data = response.data;
 					console.log(data);
