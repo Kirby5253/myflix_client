@@ -2,9 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import './main-view.scss';
 import { Nav, Navbar, Container } from 'react-bootstrap';
-import { Link } from "react-router-dom";
 
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -70,18 +69,18 @@ export class MainView extends React.Component {
 
 	getUser(token) {
 		axios
-				.get('https://myflixdb5253.herokuapp.com/users', {
-					headers: { Authorization: `Bearer ${token}` }
-				})
-				.then((response) => {
-					this.setState({
-						users: response.data
-					});
-				})
-				.catch(function(error) {
-					console.log(error);
+			.get('https://myflixdb5253.herokuapp.com/users', {
+				headers: { Authorization: `Bearer ${token}` }
+			})
+			.then((response) => {
+				this.setState({
+					users: response.data
+				});
+			})
+			.catch(function(error) {
+				console.log(error);
 			});
-	};
+	}
 
 	createAccount(user) {
 		this.setState({
@@ -103,16 +102,20 @@ export class MainView extends React.Component {
 	render() {
 		// If the state isn't initialized, this will throw on runtime
 		// before the data is initially loaded
-		const { movies, user, users} = this.state;
+		const { movies, user, users } = this.state;
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
+
+		console.log(user);
 
 		return (
 			<Router>
 				<div className="navbar">
 					<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-						<Navbar.Brand href="/"><h1>MyFlix</h1></Navbar.Brand>
+						<Navbar.Brand href="/">
+							<h1>MyFlix</h1>
+						</Navbar.Brand>
 						<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 						<Navbar.Collapse id="responsive-navbar-nav">
 							<Nav className="mr-auto">
@@ -128,27 +131,68 @@ export class MainView extends React.Component {
 				</div>
 
 				<div className="main-view">
+					<Route
+						exact
+						path="/"
+						render={() => {
+							if (!user)
+								return (
+									<Container>
+										<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+									</Container>
+								);
+							return movies.map((m) => (
+								<div className="grid">
+									<MovieCard user={users.find((u) => u.Username === user)} key={m._id} movie={m} />
+								</div>
+							));
+						}}
+					/>
 
-          <Route exact path="/" render={() => {
-						if (!user) return (<Container><LoginView onLoggedIn={(user) => this.onLoggedIn(user)}/></Container>);
-						return movies.map(m => <div className="grid"><MovieCard key={m._id} movie={m}/></div>)}}/>
+					<Route
+						path="/register"
+						render={() => {
+							if (!user)
+								return (
+									<Container>
+										<RegistrationView />
+									</Container>
+								);
+						}}
+					/>
 
-					<Route path="/register" render={() => {
-					if (!user) return (<Container><RegistrationView/></Container>)}}/>					
+					<Route
+						path="/profile/:username"
+						render={({ match }) => (
+							<ProfileView user={users.find((m) => m.Username === match.params.username)} />
+						)}
+					/>
 
-					<Route path="/profile/:username" render={({match}) => <ProfileView user={users.find(m => m.Username === match.params.username)}/>}/>
+					<Route
+						path="/movies/:movieId"
+						render={({ match }) => <MovieView movie={movies.find((m) => m._id === match.params.movieId)} />}
+					/>
 
-          <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+					<Route
+						path="/genres/:name"
+						render={({ match }) => {
+							if (!movies) return <div className="main-view" />;
+							return <GenreView genre={movies.find((m) => m.Genre.Name === match.params.name).Genre} />;
+						}}
+					/>
 
-					<Route path="/genres/:name" render={({ match }) => {
-						if (!movies) return <div className="main-view"/>;
-						return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre}/>}} />
-
-					<Route path="/directors/:name" render={({ match }) => {
-						if (!movies) return <div className="main-view"/>;
-						return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}} />
-
-        </div>
+					<Route
+						path="/directors/:name"
+						render={({ match }) => {
+							if (!movies) return <div className="main-view" />;
+							return (
+								<DirectorView
+									director={movies.find((m) => m.Director.Name === match.params.name).Director}
+								/>
+							);
+						}}
+					/>
+				</div>
 			</Router>
 		);
 	}

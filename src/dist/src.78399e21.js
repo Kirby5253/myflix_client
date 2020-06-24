@@ -48888,7 +48888,10 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
   _createClass(MovieCard, [{
     key: "render",
     value: function render() {
-      var movie = this.props.movie;
+      var _this$props = this.props,
+          movie = _this$props.movie,
+          user = _this$props.user;
+      console.log(user.Favorite_Movies);
       return _react.default.createElement("div", {
         className: "movie-cards"
       }, _react.default.createElement(_reactBootstrap.Card, {
@@ -48897,11 +48900,13 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
           width: '15rem'
         },
         bg: 'dark'
+      }, _react.default.createElement("div", {
+        className: "card-overlay"
       }, _react.default.createElement(_reactBootstrap.Card.Img, {
         className: "movie-card-img",
         variant: "top",
         src: movie.ImagePath
-      }), _react.default.createElement(_reactBootstrap.Card.Body, null, _react.default.createElement(_reactBootstrap.Card.Title, {
+      })), _react.default.createElement(_reactBootstrap.Card.Body, null, _react.default.createElement(_reactBootstrap.Card.Title, {
         className: "movie-title"
       }, movie.Title), _react.default.createElement(_reactBootstrap.Card.Text, null, movie.Description), _react.default.createElement(_reactRouterDom.Link, {
         to: "/movies/".concat(movie._id)
@@ -49646,6 +49651,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
+      console.log(user);
       return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
         className: "navbar"
       }, _react.default.createElement(_reactBootstrap.Navbar, {
@@ -49688,6 +49694,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             return _react.default.createElement("div", {
               className: "grid"
             }, _react.default.createElement(_movieCard.MovieCard, {
+              user: users.find(function (u) {
+                return u.Username === user;
+              }),
               key: m._id,
               movie: m
             }));
@@ -49846,7 +49855,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57752" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59648" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
