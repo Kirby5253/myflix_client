@@ -49139,6 +49139,10 @@ function RegistrationView(props) {
     });
   };
 
+  var cancelRegistration = function cancelRegistration() {
+    window.open('/', '_self');
+  };
+
   return _react.default.createElement("div", {
     className: "login-form"
   }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Label, null, _react.default.createElement("h3", null, "Create New User for MyFlix")), _react.default.createElement(_Form.default.Group, {
@@ -49183,7 +49187,11 @@ function RegistrationView(props) {
     variant: "dark",
     type: "button",
     onClick: handleRegistrationSubmit
-  }, "Register")));
+  }, "Register"), _react.default.createElement(_Button.default, {
+    variant: "link",
+    type: "button",
+    onClick: cancelRegistration
+  }, "Already a user? Click here to sign in.")));
 }
 
 RegistrationView.propTypes = {
@@ -49475,9 +49483,11 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         className: "button-nav"
       }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_Button.default, {
         variant: "dark"
-      }, "View Favorites")), _react.default.createElement("li", null, _react.default.createElement(_Button.default, {
+      }, "View Favorites")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/profile/".concat(user.Username, "/update")
+      }, _react.default.createElement(_Button.default, {
         variant: "dark"
-      }, "Update Account")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+      }, "Update Account"))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile/".concat(user.Username, "/delete")
       }, _react.default.createElement(_Button.default, {
         variant: "dark"
@@ -49489,7 +49499,12 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.ProfileView = ProfileView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","prop-types":"../node_modules/prop-types/index.js","./profile-view.scss":"components/profile-view/profile-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/change-profile-view/change-profile-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","prop-types":"../node_modules/prop-types/index.js","./profile-view.scss":"components/profile-view/profile-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/change-profile-view/change-profile-view.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../../../../home/jake/.nvm/versions/node/v12.18.0/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/change-profile-view/change-profile-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49503,7 +49518,11 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _axios = _interopRequireDefault(require("axios"));
+
+require("./change-profile-view.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49524,6 +49543,8 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function ChangeProfile(props) {
+  var user = this.props.user;
+
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       newUsername = _useState2[0],
@@ -49611,7 +49632,7 @@ function ChangeProfile(props) {
     onClick: handleProfileUpdate
   }, "Register")));
 }
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","axios":"../node_modules/axios/index.js"}],"components/delete-profile-view/delete-profile-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js","./change-profile-view.scss":"components/change-profile-view/change-profile-view.scss"}],"components/delete-profile-view/delete-profile-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -49674,8 +49695,6 @@ var DeleteProfile = /*#__PURE__*/function (_React$Component) {
   _createClass(DeleteProfile, [{
     key: "render",
     value: function render() {
-      var _this = this;
-
       var _this$props = this.props,
           user = _this$props.user,
           onDelete = _this$props.onDelete;
@@ -49683,19 +49702,15 @@ var DeleteProfile = /*#__PURE__*/function (_React$Component) {
       console.log(token);
 
       var handleDelete = function handleDelete(e) {
-        e.preventDefault();
-
         _axios.default.delete("https://myflixdb5253.herokuapp.com/users/".concat(user.Username), {
           headers: {
             Authorization: "Bearer ".concat(token)
           }
         }).then(function (response) {
           var data = response.data;
+          location.reload();
           console.log(data);
-
-          _this.setState({
-            user: null
-          });
+          onDelete();
         }).catch(function (e) {
           console.log('no such user');
         });
@@ -49704,9 +49719,9 @@ var DeleteProfile = /*#__PURE__*/function (_React$Component) {
       return _react.default.createElement("div", {
         className: "delete-profile"
       }, _react.default.createElement("h1", null, "Are you sure you want to delete this profile?"), _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/"
+        to: "/register"
       }, _react.default.createElement(_Button.default, {
-        onClick: handleDelete && onDelete,
+        onClick: handleDelete,
         className: "delete-buttons",
         variant: "danger"
       }, "Yes, delete my account."))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
@@ -49920,7 +49935,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
-      return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "navbar"
       }, _react.default.createElement(_reactBootstrap.Navbar, {
         fixed: "top",
@@ -49945,7 +49960,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _this5.logoutUser();
         },
         href: "http://localhost:1234/"
-      }, "Logout"))))), _react.default.createElement("div", {
+      }, "Logout"))))), _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
         className: "main-view"
       }, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -50048,7 +50063,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             }).Director
           });
         }
-      })));
+      }))));
     }
   }]);
 
@@ -50150,7 +50165,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52461" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55029" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

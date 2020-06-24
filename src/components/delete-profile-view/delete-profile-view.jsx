@@ -13,17 +13,15 @@ export class DeleteProfile extends React.Component {
 		console.log(token);
 
 		const handleDelete = (e) => {
-			e.preventDefault();
 			axios
 				.delete(`https://myflixdb5253.herokuapp.com/users/${user.Username}`, {
 					headers: { Authorization: `Bearer ${token}` }
 				})
 				.then((response) => {
 					const data = response.data;
+					location.reload();
 					console.log(data);
-					this.setState({
-						user: null
-					});
+					onDelete();
 				})
 				.catch((e) => {
 					console.log('no such user');
@@ -35,8 +33,8 @@ export class DeleteProfile extends React.Component {
 				<h1>Are you sure you want to delete this profile?</h1>
 				<ul>
 					<li>
-						<Link to={`/`}>
-							<Button onClick={handleDelete && onDelete} className="delete-buttons" variant="danger">
+						<Link to={`/register`}>
+							<Button onClick={handleDelete} className="delete-buttons" variant="danger">
 								Yes, delete my account.
 							</Button>
 						</Link>

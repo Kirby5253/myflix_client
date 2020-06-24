@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 import axios from 'axios';
+import './change-profile-view.scss';
 
 export function ChangeProfile(props) {
+	const { user } = this.props;
 	const [ newUsername, setNewUsername ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newEmail, setNewEmail ] = useState('');
