@@ -28,14 +28,6 @@ export function LoginView(props) {
 			});
 	};
 
-	const createAccount = (e) => {
-		e.preventDefault();
-		console.log('new user');
-		// Send a request to the server for authentication then call props.onLoggedIn(username)
-		props.createAccount();
-		props.createUser();
-	};
-
 	return (
 		<div className="login-form">
 			<Form>
@@ -76,6 +68,7 @@ export function LoginView(props) {
 		</div>
 	);
 }
+
 
 LoginView.propTypes = {
 	setUsername: PropTypes.string,
