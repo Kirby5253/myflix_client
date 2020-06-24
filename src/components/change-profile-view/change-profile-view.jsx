@@ -4,30 +4,39 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './change-profile-view.scss';
+import { Link } from 'react-router-dom';
 
 export function ChangeProfile(props) {
-	const { user } = this.props;
 	const [ newUsername, setNewUsername ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newEmail, setNewEmail ] = useState('');
 	const [ newBirthDate, setNewBirthDate ] = useState('');
+	const storedUser = localStorage.getItem('user');
+	const token = localStorage.getItem('token');
 
-	if (!user) return null;
+	if (!storedUser) return null;
 
 	const handleProfileUpdate = (e) => {
 		e.preventDefault();
 		/* Send a request to the server for authentication */
 		axios
-			.put('https://myflixdb5253.herokuapp.com/users/', {
-				Username: newUsername,
-				Password: newPassword,
-				Email: newEmail,
-				Birth_Date: newBirthDate
-			})
+			.put(
+				`https://myflixdb5253.herokuapp.com/users/${storedUser}`,
+				{
+					Username: newUsername,
+					Password: newPassword,
+					Email: newEmail,
+					Birthday: newBirthDate
+				},
+				{
+					headers: { Authorization: `Bearer ${token}` }
+				}
+			)
 			.then((response) => {
 				const data = response.data;
 				console.log(data);
 				window.open(`/profile/${newUsername}`, '_self'); // Self to open in the current window
+				localStorage.setItem('user', newUsername);
 			})
 			.catch((e) => {
 				console.log('error updating the user');
@@ -36,14 +45,16 @@ export function ChangeProfile(props) {
 	};
 
 	return (
-		<div className="login-form">
-			<Form>
+		<div className="update-form">
+			<Form className="change-form">
 				<Form.Label>
-					<h3>Create New User for MyFlix</h3>
+					<h3>
+						Update User Info<br /> (All fields are required)
+					</h3>
 				</Form.Label>
 
 				<Form.Group controlId="formBasicUsername">
-					<Form.Label>Create Username:</Form.Label>
+					<Form.Label>New Username:</Form.Label>
 					<Form.Control
 						type="text"
 						placeholder="Username"
@@ -54,7 +65,7 @@ export function ChangeProfile(props) {
 				</Form.Group>
 
 				<Form.Group controlId="formBasicPassword">
-					<Form.Label>Create Password</Form.Label>
+					<Form.Label>New Password:</Form.Label>
 					<Form.Control
 						type="password"
 						placeholder="Password"
@@ -65,7 +76,7 @@ export function ChangeProfile(props) {
 				</Form.Group>
 
 				<Form.Group controlId="formBasicPassword">
-					<Form.Label>Email</Form.Label>
+					<Form.Label>New Email</Form.Label>
 					<Form.Control
 						type="email"
 						placeholder="Email"
@@ -84,9 +95,12 @@ export function ChangeProfile(props) {
 					/>
 				</Form.Group>
 
-				<Button variant="dark" type="button" onClick={handleProfileUpdate}>
-					Register
+				<Button onClick={handleProfileUpdate} variant="primary" type="button">
+					Update Account
 				</Button>
+				<Link to={`/profile/${storedUser}`}>
+					<Button variant="link">Cancel Update</Button>
+				</Link>
 			</Form>
 		</div>
 	);
