@@ -29,14 +29,6 @@ export function RegistrationView(props) {
 			});
 	};
 
-	// Has ability to login with random credentials for existing user, no functionality for new users yet
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log(newUsername, newPassword, newEmail, newBirthDate);
-		// Send a request to the server for authentication then call props.onLoggedIn(username)
-		props.onLoggedIn(newUsername);
-	};
-
 	return (
 		<div className="login-form">
 			<Form>
