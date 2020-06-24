@@ -112,6 +112,9 @@ export class MainView extends React.Component {
 	}
 
 	logoutUser(user) {
+		this.setState({
+			user: null
+		});
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
 	}
@@ -199,7 +202,12 @@ export class MainView extends React.Component {
 						render={({ match }) => {
 							// Users can only see their own account info!
 							if (match.params.username === storedUser)
-								return <DeleteProfile user={users.find((m) => m.Username === match.params.username)} />;
+								return (
+									<DeleteProfile
+										user={users.find((m) => m.Username === match.params.username)}
+										onDelete={(user) => this.logoutUser()}
+									/>
+								);
 						}}
 					/>
 

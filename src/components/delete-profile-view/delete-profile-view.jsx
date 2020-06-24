@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 export class DeleteProfile extends React.Component {
 	render() {
-		const { user } = this.props;
+		const { user, onDelete } = this.props;
 		const token = localStorage.getItem('token');
 		console.log(token);
 
@@ -21,6 +21,9 @@ export class DeleteProfile extends React.Component {
 				.then((response) => {
 					const data = response.data;
 					console.log(data);
+					this.setState({
+						user: null
+					});
 				})
 				.catch((e) => {
 					console.log('no such user');
@@ -32,8 +35,8 @@ export class DeleteProfile extends React.Component {
 				<h1>Are you sure you want to delete this profile?</h1>
 				<ul>
 					<li>
-						<Link to={`/profile/${user.Username}`}>
-							<Button onClick={handleDelete} className="delete-buttons" variant="danger">
+						<Link to={`/`}>
+							<Button onClick={handleDelete && onDelete} className="delete-buttons" variant="danger">
 								Yes, delete my account.
 							</Button>
 						</Link>

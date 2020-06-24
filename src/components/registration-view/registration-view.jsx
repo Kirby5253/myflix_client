@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 export function RegistrationView(props) {
+	const user = localStorage.getItem('user');
 	const [ newUsername, setNewUsername ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newEmail, setNewEmail ] = useState('');

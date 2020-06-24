@@ -49097,6 +49097,8 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function RegistrationView(props) {
+  var user = localStorage.getItem('user');
+
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       newUsername = _useState2[0],
@@ -49672,7 +49674,11 @@ var DeleteProfile = /*#__PURE__*/function (_React$Component) {
   _createClass(DeleteProfile, [{
     key: "render",
     value: function render() {
-      var user = this.props.user;
+      var _this = this;
+
+      var _this$props = this.props,
+          user = _this$props.user,
+          onDelete = _this$props.onDelete;
       var token = localStorage.getItem('token');
       console.log(token);
 
@@ -49686,6 +49692,10 @@ var DeleteProfile = /*#__PURE__*/function (_React$Component) {
         }).then(function (response) {
           var data = response.data;
           console.log(data);
+
+          _this.setState({
+            user: null
+          });
         }).catch(function (e) {
           console.log('no such user');
         });
@@ -49694,9 +49704,9 @@ var DeleteProfile = /*#__PURE__*/function (_React$Component) {
       return _react.default.createElement("div", {
         className: "delete-profile"
       }, _react.default.createElement("h1", null, "Are you sure you want to delete this profile?"), _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/profile/".concat(user.Username)
+        to: "/"
       }, _react.default.createElement(_Button.default, {
-        onClick: handleDelete,
+        onClick: handleDelete && onDelete,
         className: "delete-buttons",
         variant: "danger"
       }, "Yes, delete my account."))), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
@@ -49888,6 +49898,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "logoutUser",
     value: function logoutUser(user) {
+      this.setState({
+        user: null
+      });
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     }
@@ -49987,7 +50000,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           if (match.params.username === storedUser) return _react.default.createElement(_deleteProfileView.DeleteProfile, {
             user: users.find(function (m) {
               return m.Username === match.params.username;
-            })
+            }),
+            onDelete: function onDelete(user) {
+              return _this5.logoutUser();
+            }
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -50134,7 +50150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65491" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52461" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
