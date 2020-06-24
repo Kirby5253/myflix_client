@@ -13,7 +13,7 @@ export class MovieView extends React.Component {
 	}
 
 	render() {
-		const { movie, onClick } = this.props;
+		const { movie } = this.props;
 
 		if (!movie) return null;
 
@@ -34,12 +34,12 @@ export class MovieView extends React.Component {
 				</div>
 				<div className="movie-genre">
 					<Link to={`/genres/${movie.Genre.Name}`}>
-						<Button variant="link" className="label link">Genre: </Button>
+						<Button variant="link" className="label link">Genre:  </Button>
 					</Link>
 					<span className="value">{movie.Genre.Name}</span>
 				</div>
 				<div className="movie-director">
-					<Link to={`/genres/${movie.Genre.Name}`}>
+					<Link to={`/directors/${movie.Director.Name}`}>
 						<Button variant="link" className="label link">Director: </Button>
 					</Link>
 					<span className="value">{movie.Director.Name}</span>
@@ -64,6 +64,5 @@ MovieView.propTypes = {
 		Director: PropTypes.object,
 		Genre: PropTypes.object,
 		Actors: PropTypes.array
-	}).isRequired,
-	onClick: PropTypes.func.isRequired
+	})
 };
