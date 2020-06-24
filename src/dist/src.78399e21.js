@@ -48786,7 +48786,6 @@ function LoginView(props) {
       props.onLoggedIn(data);
     }).catch(function (e) {
       console.log('no such user');
-      alert('User input not recognized. Please try again, or create a new account.');
     });
   };
 
@@ -49110,6 +49109,8 @@ function RegistrationView(props) {
       newBirthDate = _useState8[0],
       setNewBirthDate = _useState8[1];
 
+  if (user) return null;
+
   var handleRegistrationSubmit = function handleRegistrationSubmit(e) {
     e.preventDefault();
     /* Send a request to the server for authentication */
@@ -49384,11 +49385,9 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ProfileView = ProfileView;
+exports.ProfileView = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
-
-var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
+var _react = _interopRequireDefault(require("react"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
@@ -49396,31 +49395,84 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 require("./profile-view.scss");
 
+var _reactRouterDom = require("react-router-dom");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function ProfileView(props) {
-  var user = this.props.user;
-  return _react.default.createElement("div", {
-    className: "profile-view"
-  }, _react.default.createElement("div", {
-    className: "username"
-  }, _react.default.createElement("span", {
-    className: "label"
-  }, "Username: "), _react.default.createElement("span", {
-    className: "value"
-  }, user.Username)), _react.default.createElement("div", {
-    className: "user-email"
-  }, _react.default.createElement("span", {
-    className: "label"
-  }, "Email: "), _react.default.createElement("span", {
-    className: "value"
-  }, user.Email)));
-}
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","prop-types":"../node_modules/prop-types/index.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var ProfileView = /*#__PURE__*/function (_React$Component) {
+  _inherits(ProfileView, _React$Component);
+
+  var _super = _createSuper(ProfileView);
+
+  function ProfileView() {
+    var _this;
+
+    _classCallCheck(this, ProfileView);
+
+    _this = _super.call(this);
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(ProfileView, [{
+    key: "render",
+    value: function render() {
+      var user = this.props.user;
+      if (!user) return null;
+      console.log(user);
+      return _react.default.createElement("div", {
+        className: "profile-view"
+      }, _react.default.createElement("div", {
+        className: "username"
+      }, _react.default.createElement("span", {
+        className: "profile-label"
+      }, "Username: "), _react.default.createElement("span", {
+        className: "value"
+      }, user.Username)), _react.default.createElement("div", {
+        className: "user-email"
+      }, _react.default.createElement("span", {
+        className: "profile-label"
+      }, "Email: "), _react.default.createElement("span", {
+        className: "value"
+      }, user.Email)), _react.default.createElement("div", {
+        className: "button-nav"
+      }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_Button.default, {
+        variant: "dark"
+      }, "View Favorites")), _react.default.createElement("li", null, _react.default.createElement(_Button.default, {
+        variant: "dark"
+      }, "Update Account")), _react.default.createElement("li", null, _react.default.createElement(_Button.default, {
+        variant: "dark"
+      }, "Delete Account")))));
+    }
+  }]);
+
+  return ProfileView;
+}(_react.default.Component);
+
+exports.ProfileView = ProfileView;
+},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","prop-types":"../node_modules/prop-types/index.js","./profile-view.scss":"components/profile-view/profile-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49552,7 +49604,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        // Assign the result to the state
         _this3.setState({
           users: response.data
         });
@@ -49615,7 +49666,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         href: "/"
       }, "Movies"), _react.default.createElement(_reactBootstrap.Nav.Link, {
         href: "#action/3.2"
-      }, "Favorites"), _react.default.createElement(_reactBootstrap.Nav.Link, null, "Account"), _react.default.createElement(_reactBootstrap.Nav.Link, {
+      }, "Favorites"), _react.default.createElement(_reactBootstrap.Nav.Link, {
+        href: "/profile/".concat(user)
+      }, "Account"), _react.default.createElement(_reactBootstrap.Nav.Link, {
         onClick: function onClick(user) {
           return _this4.logoutUser();
         },
@@ -49643,15 +49696,15 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/register",
         render: function render() {
-          return _react.default.createElement(_reactBootstrap.Container, null, _react.default.createElement(_registrationView.RegistrationView, null));
+          if (!user) return _react.default.createElement(_reactBootstrap.Container, null, _react.default.createElement(_registrationView.RegistrationView, null));
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/profile/:username",
         render: function render(_ref) {
           var match = _ref.match;
           return _react.default.createElement(_profileView.ProfileView, {
-            user: users.find(function (u) {
-              return u.Username === match.params.username;
+            user: users.find(function (m) {
+              return m.Username === match.params.username;
             })
           });
         }
@@ -49793,7 +49846,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51885" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57752" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

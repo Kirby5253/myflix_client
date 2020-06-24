@@ -102,6 +102,19 @@ div {
   font-size: 20px;
   border-radius: 20px;
 }
+ul {
+  display: flex;
+  list-style: none;
+}
+
+li {
+  margin: 10px;
+}
+
+.profile-label {
+  font-size: 25px;
+  margin-bottom: 30px;
+}
 body {
   font-family: "Ubuntu", sans-serif;
 }

@@ -24,7 +24,6 @@ export function LoginView(props) {
 			})
 			.catch((e) => {
 				console.log('no such user');
-				alert('User input not recognized. Please try again, or create a new account.')
 			});
 	};
 
