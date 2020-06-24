@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import './delete-profile-view.scss';
 import axios from 'axios';
-
 import { Link } from 'react-router-dom';
 
 export class DeleteProfile extends React.Component {
