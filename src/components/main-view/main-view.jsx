@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import './main-view.scss';
-import { Nav, Navbar, NavDropdown, Row, Container, Col } from 'react-bootstrap';
+import { Nav, Navbar, Container } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
@@ -9,6 +10,9 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
+import { GenreView } from '../genre-view/genre-view';
+import { DirectorView } from '../director-view/director-view';
+import { ProfileView } from '../profile-view/profile-view';
 
 export class MainView extends React.Component {
 	constructor() {
@@ -18,7 +22,8 @@ export class MainView extends React.Component {
 			movies: [],
 			selectedMovie: null,
 			user: null,
-			newUser: false
+			newUser: false,
+			users: []
 		};
 	}
 
@@ -31,6 +36,7 @@ export class MainView extends React.Component {
 				user: localStorage.getItem('user')
 			});
 			this.getMovies(accessToken);
+			this.getUser(accessToken);
 		}
 	}
 
@@ -43,6 +49,7 @@ export class MainView extends React.Component {
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.Username);
 		this.getMovies(authData.token);
+		this.getUser(authData.token);
 	}
 
 	getMovies(token) {
@@ -60,6 +67,21 @@ export class MainView extends React.Component {
 				console.log(error);
 			});
 	}
+
+	getUser(token) {
+		axios
+				.get('https://myflixdb5253.herokuapp.com/users', {
+					headers: { Authorization: `Bearer ${token}` }
+				})
+				.then((response) => {
+					this.setState({
+						users: response.data
+					});
+				})
+				.catch(function(error) {
+					console.log(error);
+			});
+	};
 
 	createAccount(user) {
 		this.setState({
@@ -81,7 +103,7 @@ export class MainView extends React.Component {
 	render() {
 		// If the state isn't initialized, this will throw on runtime
 		// before the data is initially loaded
-		const { movies, selectedMovie, user, newUser } = this.state;
+		const { movies, user, users} = this.state;
 
 		// Before the movies have been loaded
 		if (!movies) return <div className="main-view" />;
@@ -90,15 +112,13 @@ export class MainView extends React.Component {
 			<Router>
 				<div className="navbar">
 					<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-						<Navbar.Brand href="/"><h1>MyFLix</h1></Navbar.Brand>
+						<Navbar.Brand href="/"><h1>MyFlix</h1></Navbar.Brand>
 						<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 						<Navbar.Collapse id="responsive-navbar-nav">
 							<Nav className="mr-auto">
 								<Nav.Link href="/">Movies</Nav.Link>
-								<Nav.Link href="/directors">Directors</Nav.Link>
-								<Nav.Link href="/genres">Genres</Nav.Link>
 								<Nav.Link href="#action/3.2">Favorites</Nav.Link>
-								<Nav.Link href="/Account">Account Info</Nav.Link>
+								<Nav.Link href={`/profile/${user}`}>Account</Nav.Link>
 								<Nav.Link onClick={(user) => this.logoutUser()} href="http://localhost:1234/">
 									Logout
 								</Nav.Link>
@@ -113,7 +133,10 @@ export class MainView extends React.Component {
 						if (!user) return (<Container><LoginView onLoggedIn={(user) => this.onLoggedIn(user)}/></Container>);
 						return movies.map(m => <div className="grid"><MovieCard key={m._id} movie={m}/></div>)}}/>
 
-					<Route path="/register" render={() => <Container><RegistrationView/></Container>}/>
+					<Route path="/register" render={() => {
+					if (!user) return (<Container><RegistrationView/></Container>)}}/>					
+
+					<Route path="/profile/:username" render={({match}) => <ProfileView user={users.find(m => m.Username === match.params.username)}/>}/>
 
           <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
 
@@ -124,6 +147,7 @@ export class MainView extends React.Component {
 					<Route path="/directors/:name" render={({ match }) => {
 						if (!movies) return <div className="main-view"/>;
 						return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}} />
+
         </div>
 			</Router>
 		);
