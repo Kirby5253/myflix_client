@@ -14,6 +14,7 @@ import { DirectorView } from '../director-view/director-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { ChangeProfile } from '../change-profile-view/change-profile-view';
 import { DeleteProfile } from '../delete-profile-view/delete-profile-view';
+import { ChangeFavorites } from '../change-favorites-view/change-favorites-view';
 
 export class MainView extends React.Component {
 	constructor() {
@@ -217,12 +218,26 @@ export class MainView extends React.Component {
 						/>
 
 						<Route
+							path="/profile/:username/favorites"
+							render={({ match }) => {
+								// Users can only see their own account info!
+								if (match.params.username === storedUser)
+									return (
+										<ChangeFavorites
+											user={users.find((m) => m.Username === match.params.username)}
+										/>
+									);
+							}}
+						/>
+
+						<Route
 							path="/movies/:movieId"
 							render={({ match }) => (
 								<MovieView
 									addToFav={() => this.addToFav(user)}
 									movie={movies.find((m) => m._id === match.params.movieId)}
 									user={users.find((m) => m.Username === storedUser)}
+									token={localStorage.getItem('token')}
 								/>
 							)}
 						/>

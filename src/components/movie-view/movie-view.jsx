@@ -14,7 +14,22 @@ export class MovieView extends React.Component {
 	}
 
 	render() {
-		const { movie, user, addToFav } = this.props;
+		const { movie, user, token } = this.props;
+		const storedUser = localStorage.getItem('user');
+
+		const handleAddFavorite = (e) => {
+			axios
+				.post(`https://myflixdb5253.herokuapp.com/users/${storedUser}/Movies/${movie._id}`, {
+					headers: { Authorization: `Bearer ${token}` }
+				})
+				.then((response) => {
+					const data = response.data;
+					console.log(data);
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		};
 
 		if (!movie) return null;
 
@@ -53,6 +68,10 @@ export class MovieView extends React.Component {
 				</div>
 
 				<br />
+				<Button onClick={handleAddFavorite} variant="dark">
+					Add to Favorites
+				</Button>
+
 				<Link to={`/`}>
 					<Button variant="dark">Back</Button>
 				</Link>
