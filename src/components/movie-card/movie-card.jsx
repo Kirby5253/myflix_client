@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom';
 
 export class MovieCard extends React.Component {
 	render() {
-		const { movie, user } = this.props;
-
-		console.log(user.Favorite_Movies);
+		const { movie } = this.props;
 
 		return (
 			<div className="movie-cards">

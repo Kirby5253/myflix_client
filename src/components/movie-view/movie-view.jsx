@@ -2,8 +2,9 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './movie-view.scss';
+import axios from 'axios';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
 	constructor() {
@@ -13,9 +14,11 @@ export class MovieView extends React.Component {
 	}
 
 	render() {
-		const { movie } = this.props;
+		const { movie, user, addToFav } = this.props;
 
 		if (!movie) return null;
+
+		console.log(user.Favorite_Movies);
 
 		return (
 			<div className="movie-view">
@@ -34,22 +37,24 @@ export class MovieView extends React.Component {
 				</div>
 				<div className="movie-genre">
 					<Link to={`/genres/${movie.Genre.Name}`}>
-						<Button variant="link" className="label link">Genre:  </Button>
+						<Button variant="link" className="label link">
+							Genre:{' '}
+						</Button>
 					</Link>
 					<span className="value">{movie.Genre.Name}</span>
 				</div>
 				<div className="movie-director">
 					<Link to={`/directors/${movie.Director.Name}`}>
-						<Button variant="link" className="label link">Director: </Button>
+						<Button variant="link" className="label link">
+							Director:{' '}
+						</Button>
 					</Link>
 					<span className="value">{movie.Director.Name}</span>
 				</div>
-				
+
 				<br />
 				<Link to={`/`}>
-					<Button variant="dark">
-						Back
-					</Button>
+					<Button variant="dark">Back</Button>
 				</Link>
 			</div>
 		);

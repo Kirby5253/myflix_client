@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export function RegistrationView(props) {
+export function ChangeProfile(props) {
 	const [ newUsername, setNewUsername ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newEmail, setNewEmail ] = useState('');
 	const [ newBirthDate, setNewBirthDate ] = useState('');
 
-	if (user) return null;
+	if (!user) return null;
 
-	const handleRegistrationSubmit = (e) => {
+	const handleProfileUpdate = (e) => {
 		e.preventDefault();
 		/* Send a request to the server for authentication */
 		axios
-			.post('https://myflixdb5253.herokuapp.com/users', {
+			.put('https://myflixdb5253.herokuapp.com/users/', {
 				Username: newUsername,
 				Password: newPassword,
 				Email: newEmail,
@@ -25,10 +24,11 @@ export function RegistrationView(props) {
 			.then((response) => {
 				const data = response.data;
 				console.log(data);
-				window.open('/', '_self'); // Self to open in the current window
+				window.open(`/profile/${newUsername}`, '_self'); // Self to open in the current window
 			})
 			.catch((e) => {
-				console.log('error registering the user');
+				console.log('error updating the user');
+				console.log(e);
 			});
 	};
 
@@ -81,15 +81,10 @@ export function RegistrationView(props) {
 					/>
 				</Form.Group>
 
-				<Button variant="dark" type="button" onClick={handleRegistrationSubmit}>
+				<Button variant="dark" type="button" onClick={handleProfileUpdate}>
 					Register
 				</Button>
 			</Form>
 		</div>
 	);
 }
-
-RegistrationView.propTypes = {
-	setNewUsername: PropTypes.string,
-	setNewPassword: PropTypes.string
-};
