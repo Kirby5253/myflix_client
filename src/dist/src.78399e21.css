@@ -115,6 +115,24 @@ li {
   font-size: 25px;
   margin-bottom: 30px;
 }
+.update-form {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: absolute;
+  background: #343a40;
+  top: 20%;
+  padding: 50px;
+  color: white;
+  right: 10px;
+  left: 10px;
+  border-radius: 35px;
+  text-align: center;
+}
+
+.change-form {
+  margin-top: 0%;
+}
 .delete-profile {
   position: absolute;
   background: #343a40;
@@ -129,6 +147,17 @@ li {
 
 ul {
   justify-content: center;
+}
+.remove-favorite {
+  position: absolute;
+  background: #343a40;
+  top: 20%;
+  padding: 50px;
+  color: white;
+  right: 10px;
+  left: 10px;
+  border-radius: 35px;
+  text-align: center;
 }
 body {
   font-family: "Ubuntu", sans-serif;
