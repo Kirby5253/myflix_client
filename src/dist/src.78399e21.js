@@ -49009,6 +49009,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
         }).then(function (response) {
           var data = response.data;
           console.log(data);
+          alert(movie.Title + ' has been added to favorites!');
         }).catch(function (e) {
           console.log(e);
         });
@@ -49058,11 +49059,13 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
       }, "Director:", ' ')), _react.default.createElement("span", {
         className: "value"
       }, movie.Director.Name)), _react.default.createElement("br", null), _react.default.createElement(_Button.default, {
+        className: "movie-button",
         onClick: handleAddFavorite,
         variant: "dark"
-      }, "Add to Favorites"), _react.default.createElement(_reactRouterDom.Link, {
+      }, "Add to Favorites"), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
+        className: "movie-button",
         variant: "dark"
       }, "Back")));
     }
@@ -49156,6 +49159,8 @@ function RegistrationView(props) {
       var data = response.data;
       console.log(data);
       window.open('/', '_self'); // Self to open in the current window
+
+      alert('User ' + newUsername + ' was successfully created. Please login with your new username and password.');
     }).catch(function (e) {
       console.log('error registering the user');
     });
@@ -49609,10 +49614,12 @@ function ChangeProfile(props) {
     }).then(function (response) {
       var data = response.data;
       console.log(data);
+      alert('User info was successfully updated!');
       window.open("/profile/".concat(newUsername), '_self'); // Self to open in the current window
 
       localStorage.setItem('user', newUsername);
     }).catch(function (e) {
+      alert('Error: User info was not updated. Please try again.');
       console.log('error updating the user');
       console.log(e);
     });
@@ -49840,9 +49847,11 @@ function ChangeFavorites() {
     }).then(function (response) {
       var data = response.data;
       console.log(data);
+      alert(favoriteId + ' has been removed from favorites.');
       location.reload();
     }).catch(function (e) {
       console.log(e);
+      alert('Please input a valid Movie ID.');
     });
   };
 
@@ -50313,7 +50322,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64538" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63885" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

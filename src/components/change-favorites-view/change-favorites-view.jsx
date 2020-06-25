@@ -25,10 +25,12 @@ export function ChangeFavorites() {
 			.then((response) => {
 				const data = response.data;
 				console.log(data);
+				alert(favoriteId + ' has been removed from favorites.');
 				location.reload();
 			})
 			.catch((e) => {
 				console.log(e);
+				alert('Please input a valid Movie ID.');
 			});
 	};
 

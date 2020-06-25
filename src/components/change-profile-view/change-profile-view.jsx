@@ -35,10 +35,12 @@ export function ChangeProfile(props) {
 			.then((response) => {
 				const data = response.data;
 				console.log(data);
+				alert('User info was successfully updated!');
 				window.open(`/profile/${newUsername}`, '_self'); // Self to open in the current window
 				localStorage.setItem('user', newUsername);
 			})
 			.catch((e) => {
+				alert('Error: User info was not updated. Please try again.');
 				console.log('error updating the user');
 				console.log(e);
 			});

@@ -27,6 +27,11 @@ export function RegistrationView(props) {
 				const data = response.data;
 				console.log(data);
 				window.open('/', '_self'); // Self to open in the current window
+				alert(
+					'User ' +
+						newUsername +
+						' was successfully created. Please login with your new username and password.'
+				);
 			})
 			.catch((e) => {
 				console.log('error registering the user');

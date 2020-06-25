@@ -31,6 +31,7 @@ export class MovieView extends React.Component {
 				.then((response) => {
 					const data = response.data;
 					console.log(data);
+					alert(movie.Title + ' has been added to favorites!');
 				})
 				.catch((e) => {
 					console.log(e);
@@ -74,12 +75,14 @@ export class MovieView extends React.Component {
 				</div>
 
 				<br />
-				<Button onClick={handleAddFavorite} variant="dark">
+				<Button className="movie-button" onClick={handleAddFavorite} variant="dark">
 					Add to Favorites
 				</Button>
-
+				<br />
 				<Link to={`/`}>
-					<Button variant="dark">Back</Button>
+					<Button className="movie-button" variant="dark">
+						Back
+					</Button>
 				</Link>
 			</div>
 		);
