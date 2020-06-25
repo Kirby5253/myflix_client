@@ -3,8 +3,13 @@ import axios from 'axios';
 import './main-view.scss';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -16,15 +21,13 @@ import { ChangeProfile } from '../change-profile-view/change-profile-view';
 import { DeleteProfile } from '../delete-profile-view/delete-profile-view';
 import { ChangeFavorites } from '../change-favorites-view/change-favorites-view';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
+
 	constructor() {
 		super();
 
 		this.state = {
-			movies: [],
-			selectedMovie: null,
 			user: null,
-			newUser: false,
 			users: []
 		};
 	}
@@ -61,9 +64,7 @@ export class MainView extends React.Component {
 			})
 			.then((response) => {
 				// Assign the result to the state
-				this.setState({
-					movies: response.data
-				});
+				this.props.setMovies(response.data);
 			})
 			.catch(function(error) {
 				console.log(error);
@@ -85,32 +86,6 @@ export class MainView extends React.Component {
 			});
 	}
 
-	deleteUser(token) {
-		axios
-			.delete(`https://myflixdb5253.herokuapp.com/users/${user.Username}`, {
-				headers: { Authorization: `Bearer ${token}` }
-			})
-			.then((response) => {
-				this.setState({
-					users: response.data
-				});
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-	}
-
-	createAccount(user) {
-		this.setState({
-			user
-		});
-	}
-
-	createUser() {
-		this.setState({
-			newUser: true
-		});
-	}
 
 	logoutUser(user) {
 		this.setState({
@@ -121,17 +96,17 @@ export class MainView extends React.Component {
 	}
 
 	render() {
+
+		let { movies } = this.props;
 		// If the state isn't initialized, this will throw on runtime
 		// before the data is initially loaded
-		const { movies, user, users } = this.state;
+		const { user, users } = this.state;
 		const storedUser = localStorage.getItem('user');
-
-		// Before the movies have been loaded
-		if (!movies) return <div className="main-view" />;
 
 		return (
 			<div>
-				{this.state.user ? (
+				{//Allows the nav bar to not render links until user logs in
+				this.state.user ? (
 					<div className="navbar">
 						<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
 							<Navbar.Brand href="/">
@@ -159,102 +134,69 @@ export class MainView extends React.Component {
 					</div>
 				)}
 
-				<Router>
+				<Router basename="/client">
 					<div className="main-view">
-						<Route
-							exact
-							path="/"
-							render={() => {
-								if (!user)
-									return (
-										<Container>
+						<Route exact path="/" render={() => {
+								if (!user) return (
+									<Container>
 											<LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-										</Container>
-									);
-								return movies.map((m) => (
-									<div className="grid">
-										<MovieCard key={m._id} movie={m} />
-									</div>
-								));
-							}}
-						/>
+									</Container>);
+								return (<MoviesList movies={movies} />);
+								}}/>
 
-						<Route
-							path="/register"
-							render={() => {
+						<Route path="/register" render={() => {
 								if (!user)
 									return (
 										<Container>
 											<RegistrationView />
 										</Container>
 									);
-							}}
-						/>
+							}}/>
 
-						<Route
-							path="/profile/:username"
-							render={({ match }) => {
+						<Route path="/profile/:username" render={({ match }) => {
 								// Users can only see their own account info!
 								if (match.params.username === storedUser)
 									return (
 										<ProfileView user={users.find((m) => m.Username === match.params.username)} />
 									);
-							}}
-						/>
+							}}/>
 
-						<Route
-							path="/profile/:username/update"
-							render={({ match }) => {
+						<Route path="/profile/:username/update" render={({ match }) => {
 								// Users can only see their own account info!
 								if (match.params.username === storedUser)
 									return (
 										<ChangeProfile user={users.find((m) => m.Username === match.params.username)} />
 									);
-							}}
-						/>
+							}}/>
 
-						<Route
-							path="/profile/:username/delete"
-							render={({ match }) => {
+						<Route path="/profile/:username/delete" render={({ match }) => {
 								// Users can only see their own account info!
 								if (match.params.username === storedUser)
 									return (
 										<DeleteProfile
 											user={users.find((m) => m.Username === match.params.username)}
-											onDelete={(user) => this.logoutUser()}
-										/>
+											onDelete={(user) => this.logoutUser()}/>
 									);
-							}}
-						/>
+							}}/>
 
-						<Route
-							path="/profile/:username/favorites"
-							render={({ match }) => {
+						<Route path="/profile/:username/favorites" render={({ match }) => {
 								// Users can only see their own account info!
 								if (match.params.username === storedUser)
 									return (
 										<ChangeFavorites
-											user={users.find((m) => m.Username === match.params.username)}
-										/>
+											user={users.find((m) => m.Username === match.params.username)}/>
 									);
-							}}
-						/>
+							}}/>
 
-						<Route
-							path="/movies/:movieId"
-							render={({ match }) => (
-								<MovieView
+						<Route path="/movies/:movieId" render={({ match }) => (
+								<MovieView 
 									addToFav={() => this.addToFav(user)}
 									movie={movies.find((m) => m._id === match.params.movieId)}
 									user={users.find((m) => m.Username === storedUser)}
-									token={localStorage.getItem('token')}
-								/>
-							)}
-						/>
+									token={localStorage.getItem('token')}/>
+							)}/>
 
-						<Route
-							path="/genres/:name"
-							render={({ match }) => {
+						<Route path="/genres/:name" render={({ match }) => {
 								if (!movies) return <div className="main-view" />;
 								return (
 									<GenreView genre={movies.find((m) => m.Genre.Name === match.params.name).Genre} />
@@ -262,20 +204,22 @@ export class MainView extends React.Component {
 							}}
 						/>
 
-						<Route
-							path="/directors/:name"
-							render={({ match }) => {
+						<Route path="/directors/:name" render={({ match }) => {
 								if (!movies) return <div className="main-view" />;
 								return (
 									<DirectorView
-										director={movies.find((m) => m.Director.Name === match.params.name).Director}
-									/>
+										director={movies.find((m) => m.Director.Name === match.params.name).Director}/>
 								);
-							}}
-						/>
+							}}/>
 					</div>
 				</Router>
 			</div>
 		);
 	}
 }
+
+let mapStateToProps = state => {
+	return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies } )(MainView);

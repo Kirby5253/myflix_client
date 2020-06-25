@@ -26,7 +26,7 @@ export function RegistrationView(props) {
 			.then((response) => {
 				const data = response.data;
 				console.log(data);
-				window.open('/', '_self'); // Self to open in the current window
+				window.open('/client', '_self'); // Self to open in the current window
 				alert(
 					'User ' +
 						newUsername +
@@ -39,7 +39,7 @@ export function RegistrationView(props) {
 	};
 
 	const cancelRegistration = () => {
-		window.open('/', '_self');
+		window.open('/client', '_self');
 	};
 
 	return (

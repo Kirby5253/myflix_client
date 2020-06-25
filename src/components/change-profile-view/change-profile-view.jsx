@@ -36,7 +36,7 @@ export function ChangeProfile(props) {
 				const data = response.data;
 				console.log(data);
 				alert('User info was successfully updated!');
-				window.open(`/profile/${newUsername}`, '_self'); // Self to open in the current window
+				window.open(`/client/profile/${newUsername}`, '_self'); // Self to open in the current window
 				localStorage.setItem('user', newUsername);
 			})
 			.catch((e) => {
