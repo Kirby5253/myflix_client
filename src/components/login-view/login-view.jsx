@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export function LoginView(props) {
 	const [ username, setUsername ] = useState('');
@@ -29,7 +29,7 @@ export function LoginView(props) {
 
 	return (
 		<div className="login-form">
-			<Form>
+			<Form className>
 				<Form.Label>
 					<h3>Login to MyFlix</h3>
 				</Form.Label>
@@ -67,7 +67,6 @@ export function LoginView(props) {
 		</div>
 	);
 }
-
 
 LoginView.propTypes = {
 	setUsername: PropTypes.string,

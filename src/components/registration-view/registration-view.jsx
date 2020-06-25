@@ -44,7 +44,7 @@ export function RegistrationView(props) {
 
 	return (
 		<div className="login-form">
-			<Form>
+			<Form className="register-form">
 				<Form.Label>
 					<h3>Create New User for MyFlix</h3>
 				</Form.Label>

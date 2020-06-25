@@ -6,7 +6,6 @@ body {
 }
 
 form {
-  margin-top: 20%;
   width: 75%;
   align-content: center;
 }
@@ -27,14 +26,6 @@ form {
 
 .navbar {
   width: 100%;
-}
-
-.login-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #bbbbbb;
-  margin: 10px;
 }
 
 .mov {
@@ -131,17 +122,13 @@ li {
   align-content: center;
   position: absolute;
   background: #343a40;
-  top: 20%;
+  top: 13%;
   padding: 50px;
   color: white;
   right: 10px;
   left: 10px;
   border-radius: 35px;
   text-align: center;
-}
-
-.change-form {
-  margin-top: 0%;
 }
 .delete-profile {
   position: absolute;

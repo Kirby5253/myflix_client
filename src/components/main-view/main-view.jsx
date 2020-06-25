@@ -131,23 +131,25 @@ export class MainView extends React.Component {
 
 		return (
 			<div>
-				<div className="navbar">
-					<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-						<Navbar.Brand href="/">
-							<h1>MyFlix</h1>
-						</Navbar.Brand>
-						<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-						<Navbar.Collapse id="responsive-navbar-nav">
-							<Nav className="mr-auto">
-								<Nav.Link href="/">Movies</Nav.Link>
-								<Nav.Link href={`/profile/${user}`}>Account</Nav.Link>
-								<Nav.Link onClick={(user) => this.logoutUser()} href="http://localhost:1234/">
-									Logout
-								</Nav.Link>
-							</Nav>
-						</Navbar.Collapse>
-					</Navbar>
-				</div>
+				{this.state.user ? (
+					<div className="navbar">
+						<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+							<Navbar.Brand href="/">
+								<h1>MyFlix</h1>
+							</Navbar.Brand>
+							<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+							<Navbar.Collapse id="responsive-navbar-nav">
+								<Nav className="mr-auto">
+									<Nav.Link href="/">Movies</Nav.Link>
+									<Nav.Link href={`/profile/${user}`}>Account</Nav.Link>
+									<Nav.Link onClick={(user) => this.logoutUser()} href="http://localhost:1234/">
+										Logout
+									</Nav.Link>
+								</Nav>
+							</Navbar.Collapse>
+						</Navbar>
+					</div>
+				) : null}
 
 				<Router>
 					<div className="main-view">

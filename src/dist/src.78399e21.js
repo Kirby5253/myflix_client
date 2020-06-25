@@ -48791,7 +48791,9 @@ function LoginView(props) {
 
   return _react.default.createElement("div", {
     className: "login-form"
-  }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Label, null, _react.default.createElement("h3", null, "Login to MyFlix")), _react.default.createElement(_Form.default.Group, {
+  }, _react.default.createElement(_Form.default, {
+    className: true
+  }, _react.default.createElement(_Form.default.Label, null, _react.default.createElement("h3", null, "Login to MyFlix")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Username:"), _react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -49172,7 +49174,9 @@ function RegistrationView(props) {
 
   return _react.default.createElement("div", {
     className: "login-form"
-  }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Label, null, _react.default.createElement("h3", null, "Create New User for MyFlix")), _react.default.createElement(_Form.default.Group, {
+  }, _react.default.createElement(_Form.default, {
+    className: "register-form"
+  }, _react.default.createElement(_Form.default.Label, null, _react.default.createElement("h3", null, "Create New User for MyFlix")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Create Username:"), _react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -50080,7 +50084,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
+      return _react.default.createElement("div", null, this.state.user ? _react.default.createElement("div", {
         className: "navbar"
       }, _react.default.createElement(_reactBootstrap.Navbar, {
         fixed: "top",
@@ -50105,7 +50109,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _this5.logoutUser();
         },
         href: "http://localhost:1234/"
-      }, "Logout"))))), _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
+      }, "Logout"))))) : null, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
         className: "main-view"
       }, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -50322,7 +50326,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63885" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50338" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
