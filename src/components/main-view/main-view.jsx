@@ -149,7 +149,15 @@ export class MainView extends React.Component {
 							</Navbar.Collapse>
 						</Navbar>
 					</div>
-				) : null}
+				) : (
+					<div className="navbar">
+						<Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+							<Navbar.Brand href="/">
+								<h1>MyFlix</h1>
+							</Navbar.Brand>
+						</Navbar>
+					</div>
+				)}
 
 				<Router>
 					<div className="main-view">

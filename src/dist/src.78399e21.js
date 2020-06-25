@@ -50109,7 +50109,17 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           return _this5.logoutUser();
         },
         href: "http://localhost:1234/"
-      }, "Logout"))))) : null, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
+      }, "Logout"))))) : _react.default.createElement("div", {
+        className: "navbar"
+      }, _react.default.createElement(_reactBootstrap.Navbar, {
+        fixed: "top",
+        collapseOnSelect: true,
+        expand: "lg",
+        bg: "dark",
+        variant: "dark"
+      }, _react.default.createElement(_reactBootstrap.Navbar.Brand, {
+        href: "/"
+      }, _react.default.createElement("h1", null, "MyFlix")))), _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
         className: "main-view"
       }, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -50326,7 +50336,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50338" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51081" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
